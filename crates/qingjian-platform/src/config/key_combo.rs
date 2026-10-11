@@ -27,6 +27,17 @@ impl KeyCombo {
         key: 't',
     };
 
+    /// 切换繁体输出（`[general] traditional`）。macOS 壳处理；Windows / Linux 后续接快捷键。
+    pub const TOGGLE_TRADITIONAL_DEFAULT: Self = Self {
+        modifiers: Modifiers {
+            option: true,
+            shift: true,
+            control: false,
+            command: false,
+        },
+        key: 'c',
+    };
+
     /// 配置文件里的写法。
     pub fn key_string(&self) -> String {
         format!("{}+{}", self.modifiers.key(), self.key)

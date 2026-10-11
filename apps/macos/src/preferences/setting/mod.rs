@@ -158,6 +158,9 @@ pub enum Setting {
     /// `[shortcut] translate_selection`，快捷键录制按钮（修饰键 + 字母）。
     TranslateSelectionKeys,
 
+    /// `[shortcut] toggle_traditional`，快捷键录制按钮（修饰键 + 字母）。
+    ToggleTraditionalKeys,
+
     /// 「恢复默认快捷键」按钮：翻页键、模式键、三组译词 / 翻译快捷键全部回缺省。
     ResetShortcuts,
 
@@ -253,6 +256,7 @@ impl Setting {
             Self::TranslationKeys => 15,
             Self::TranslationSecondKeys => 16,
             Self::TranslateSelectionKeys => 17,
+            Self::ToggleTraditionalKeys => 65,
             Self::ResetShortcuts => 18,
             Self::ImportDictionary => 19,
             Self::Scheme => 20,
@@ -328,6 +332,7 @@ impl Setting {
             15 => Self::TranslationKeys,
             16 => Self::TranslationSecondKeys,
             17 => Self::TranslateSelectionKeys,
+            65 => Self::ToggleTraditionalKeys,
             18 => Self::ResetShortcuts,
             19 => Self::ImportDictionary,
             20 => Self::Scheme,
@@ -410,6 +415,7 @@ mod tests {
             Setting::TranslationKeys,
             Setting::TranslationSecondKeys,
             Setting::TranslateSelectionKeys,
+            Setting::ToggleTraditionalKeys,
             Setting::ResetShortcuts,
             Setting::ImportDictionary,
             Setting::Scheme,

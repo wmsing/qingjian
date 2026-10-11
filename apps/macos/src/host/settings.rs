@@ -304,6 +304,18 @@ impl Host {
                     Err(error) => tracing::warn!(%error, "快捷键不合法，未改"),
                 }
             }
+            (Setting::ToggleTraditionalKeys, SettingValue::Text(text)) => {
+                match text.parse::<KeyCombo>() {
+                    Ok(combo) => {
+                        self.settings.set_value(
+                            "shortcut",
+                            "toggle_traditional",
+                            combo.key_string(),
+                        );
+                    }
+                    Err(error) => tracing::warn!(%error, "快捷键不合法，未改"),
+                }
+            }
             (Setting::ResetShortcuts, _) => {
                 let defaults = ShortcutConfig::default();
                 self.settings
@@ -328,6 +340,11 @@ impl Host {
                     "shortcut",
                     "translate_selection",
                     defaults.translate_selection.key_string(),
+                );
+                self.settings.set_value(
+                    "shortcut",
+                    "toggle_traditional",
+                    defaults.toggle_traditional.key_string(),
                 );
                 self.settings.set_value(
                     "shortcut",

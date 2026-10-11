@@ -39,6 +39,9 @@ pub struct ShortcutsPage {
 
     /// 翻译选中文字的组合键。
     translate_selection: Retained<KeyRecorder>,
+
+    /// 切换繁体输出的组合键。
+    toggle_traditional: Retained<KeyRecorder>,
 }
 
 impl ShortcutsPage {
@@ -145,6 +148,20 @@ impl ShortcutsPage {
             "在应用里选中一段文字再按这个键，译文（学习语言）出现在候选窗口：回车替换选中的文字，Esc 保留原文。需要开着云服务。",
         );
         layout.space(GROUP_GAP);
+        let toggle_traditional = row_recorder(
+            layout,
+            mtm,
+            "切换繁体输出",
+            Setting::ToggleTraditionalKeys,
+            false,
+            target,
+        );
+        note(
+            layout,
+            mtm,
+            "随时翻转「繁体输出」开关，与「通用」页勾选相同；候选窗会短暂提示开 / 关。",
+        );
+        layout.space(GROUP_GAP);
         note_full(
             layout,
             mtm,
@@ -170,6 +187,7 @@ impl ShortcutsPage {
             translation_second,
             delete_candidate,
             translate_selection,
+            toggle_traditional,
         }
     }
 
@@ -202,5 +220,8 @@ impl ShortcutsPage {
         let translate = config.shortcut.translate_selection;
         self.translate_selection
             .show(&translate.key_string(), &translate.label());
+        let toggle = config.shortcut.toggle_traditional;
+        self.toggle_traditional
+            .show(&toggle.key_string(), &toggle.label());
     }
 }

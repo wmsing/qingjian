@@ -22,6 +22,7 @@ mod command;
 mod commit;
 mod display;
 mod text;
+mod traditional;
 mod translate;
 
 pub use click::click;
@@ -231,6 +232,12 @@ impl QingjianInputController {
             && !host::with(|h| !h.engine.composition().is_empty()).unwrap_or(false)
         {
             return self.translate_selection(client);
+        }
+        let toggle = host::with(|h| h.toggle_traditional_keys).unwrap_or_default();
+        if pressed == toggle.modifiers
+            && typed.as_deref().and_then(|t| t.chars().next()) == Some(toggle.key)
+        {
+            return self.toggle_traditional_output(client);
         }
         // 修饰键 + 数字：按配置的两组组合上屏第一 / 第二个译词（缺省 ⌥ 与 ⇧⌥）、删候选（缺省 ⇧）。
         // 只在组句中认：不在组句时 ⇧4 就是 `$`，得走下面的标点转换（中文模式出 ￥、⇧6 出 ……、⇧1 出 ！），
